@@ -16,9 +16,9 @@ public class Post {
     @Column(name="id")
     private int id;
     @Column(name="type")
-    private PostType type;
+    private String type;
     @Column(name="status")
-    private PostStatus status;
+    private String status;
     @Column(name="description")
     private String description;
     @Column(name="valid_date_time")
@@ -29,7 +29,7 @@ public class Post {
     private int createUser;
     @Column(name="coordinate_x")
     private String coordinateX;
-    @Column(name="coordincate_y")
+    @Column(name="coordinate_y")
     private String coordinateY;
 
     public int getId() {
@@ -40,19 +40,19 @@ public class Post {
         this.id = id;
     }
 
-    public PostType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(PostType type) {
+    public void setType(String type) {
         this.type = type;
     }
 
-    public PostStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(PostStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
