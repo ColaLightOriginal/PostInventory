@@ -3,16 +3,33 @@ package com.PostInventory.Classes;
 import com.PostInventory.Enums.PostStatus;
 import com.PostInventory.Enums.PostType;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "post")
 public class Post {
 
+    @Id
+    @Column(name="id")
     private int id;
-    private PostType postType;
-    private PostStatus postStatus;
+    @Column(name="type")
+    private PostType type;
+    @Column(name="status")
+    private PostStatus status;
+    @Column(name="description")
     private String description;
+    @Column(name="valid_date_time")
     private String validDateTime;
+    @Column(name="create_date_time")
     private String createDateTime;
+    @Column(name="create_user")
     private int createUser;
+    @Column(name="coordinate_x")
     private String coordinateX;
+    @Column(name="coordincate_y")
     private String coordinateY;
 
     public int getId() {
@@ -23,20 +40,20 @@ public class Post {
         this.id = id;
     }
 
-    public PostType getPostType() {
-        return postType;
+    public PostType getType() {
+        return type;
     }
 
-    public void setPostType(PostType postType) {
-        this.postType = postType;
+    public void setType(PostType type) {
+        this.type = type;
     }
 
-    public PostStatus getPostStatus() {
-        return postStatus;
+    public PostStatus getStatus() {
+        return status;
     }
 
-    public void setPostStatus(PostStatus postStatus) {
-        this.postStatus = postStatus;
+    public void setStatus(PostStatus status) {
+        this.status = status;
     }
 
     public String getDescription() {
