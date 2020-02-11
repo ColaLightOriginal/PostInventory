@@ -13,23 +13,23 @@ import javax.persistence.Table;
 public class Post {
 
     @Id
-    @Column(name="id")
+    @Column(name="id", unique = true)
     private int id;
-    @Column(name="type")
+    @Column(name="type", nullable = false)
     private String type;
-    @Column(name="status")
+    @Column(name="status", nullable = false)
     private String status;
-    @Column(name="description")
+    @Column(name="description", nullable = false)
     private String description;
-    @Column(name="valid_date_time")
+    @Column(name="valid_date_time", nullable = true)
     private String validDateTime;
-    @Column(name="create_date_time")
+    @Column(name="create_date_time", nullable = false)
     private String createDateTime;
-    @Column(name="create_user")
+    @Column(name="create_user", nullable = false)
     private int createUser;
-    @Column(name="coordinate_x")
+    @Column(name="coordinate_x", nullable = true)
     private String coordinateX;
-    @Column(name="coordinate_y")
+    @Column(name="coordinate_y", nullable = true)
     private String coordinateY;
 
     public int getId() {
