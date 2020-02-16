@@ -1,5 +1,7 @@
 package com.PostInventory.Repositories;
 import com.PostInventory.Classes.Post;
+import com.PostInventory.Utlis.GeoLocationUtils.GeoLocation;
+import jdk.jfr.StackTrace;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -95,5 +97,21 @@ public class PostRepository {
         }
     }
 
+    public List<Post> getPostsWithinDistance(GeoLocation location, double distance){
+        List<Post> resultList = new LinkedList<>();
+        String query = "SELECT * FROM Post post WHERE (coordinateX >=:minLat AND coordinateX <=:maxLat) AND (coordinateY >=:minLon " +
+                (location.meridian180WithDistance() ? "OR" : "AND") +
+                " coordinateY <=:maxLon) AND acos(sin(:radLat) * sin(coordinateX) + cos(:radLat) * cos(coordinateX) * cos(coordinateY - :radLon)) <=:earthRadius";
+        TypedQuery<Post> typedQuery = sessionFactory.createQuery(query, Post.class);
+        typedQuery.setParameter("minLat", location.boundingCoordinates(distance).get(0).getRadLatitude());
+        typedQuery.setParameter("maxLat", location.boundingCoordinates(distance).get(1).getRadLatitude());
+        typedQuery.setParameter("minLon", location.boundingCoordinates(distance).get(0).getRadLongitude());
+        typedQuery.setParameter("maxLon", location.boundingCoordinates(distance).get(1).getRadLongitude());
+        typedQuery.setParameter("radLat", location.getRadLatitude());
+        typedQuery.setParameter("radLon", location.getRadLongitude());
+        typedQuery.setParameter("earthRadius", location.getRADIUS());
 
+        resultList = typedQuery.getResultList();
+        return resultList;
+    }
 }
