@@ -88,9 +88,7 @@ public class Post {
         this.createUser = createUser;
     }
 
-    public String getCoordinateX() {
-        return coordinateX;
-    }
+    public String getCoordinateX() { return coordinateX; }
 
     public void setCoordinateX(String coordinateX) {
         this.coordinateX = coordinateX;
