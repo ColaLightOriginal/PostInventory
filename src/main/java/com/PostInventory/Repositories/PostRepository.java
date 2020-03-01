@@ -66,7 +66,6 @@ public class PostRepository {
             session.beginTransaction();
             Post result = new Post();
 
-            result.setId(post.getId());
             result.setType(post.getType());
             result.setStatus(post.getStatus());
             result.setDescription(post.getDescription());
@@ -80,7 +79,7 @@ public class PostRepository {
             session.getTransaction().commit();
             session.close();
         }catch(Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 

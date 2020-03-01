@@ -3,16 +3,14 @@ package com.PostInventory.Classes;
 import com.PostInventory.Enums.PostStatus;
 import com.PostInventory.Enums.PostType;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "post")
 public class Post {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id", unique = true)
     private int id;
     @Column(name="type", nullable = false)
