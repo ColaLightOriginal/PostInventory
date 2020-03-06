@@ -2,6 +2,8 @@ package com.PostInventory.Utlis.GeoLocationUtils;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GeoLocation {
 
@@ -103,6 +105,12 @@ public class GeoLocation {
 
     public static double getRADIUS() {
         return RADIUS;
+    }
+
+    public static boolean validateCoordinate(String coordinate){
+        Pattern coordinatePattern = Pattern.compile("(-)?[0-9]+.[0-9][0-9][0-9][0-9][0-9]");
+        Matcher matcher = coordinatePattern.matcher(coordinate);
+        return matcher.matches();
     }
 
 }

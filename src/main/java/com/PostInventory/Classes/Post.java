@@ -2,8 +2,10 @@ package com.PostInventory.Classes;
 
 import com.PostInventory.Enums.PostStatus;
 import com.PostInventory.Enums.PostType;
+import com.PostInventory.Utlis.GeoLocationUtils.GeoLocation;
 
 import javax.persistence.*;
+import javax.validation.ValidationException;
 
 @Entity
 @Table(name = "post")
@@ -89,7 +91,11 @@ public class Post {
     public String getCoordinateX() { return coordinateX; }
 
     public void setCoordinateX(String coordinateX) {
-        this.coordinateX = coordinateX;
+        if(GeoLocation.validateCoordinate(coordinateX)) this.coordinateX = coordinateX;
+        else{
+            ValidationException e = new ValidationException();
+            e.printStackTrace();
+        }
     }
 
     public String getCoordinateY() {
@@ -97,7 +103,10 @@ public class Post {
     }
 
     public void setCoordinateY(String coordinateY) {
-        this.coordinateY = coordinateY;
+        if(GeoLocation.validateCoordinate(coordinateY)) this.coordinateY = coordinateY;
+        else{
+            ValidationException e = new ValidationException();
+            e.printStackTrace();
+        }
     }
-
 }
