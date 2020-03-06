@@ -25,9 +25,7 @@ public class PostService {
         return postRepository.getUserPosts(userId);
     }
 
-    public void createPost(Post post){
-        postRepository.createPost(post);
-    }
+    public void createPost(Post post){ postRepository.createPost(post); }
 
     public void deletePost(int postId){
         postRepository.deletePost(postId);
