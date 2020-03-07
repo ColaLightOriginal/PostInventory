@@ -21,8 +21,9 @@ public class GeoLocationController {
     @Autowired
     private GeoLocationService geoLocationService;
 
-    @GetMapping(value="getPostsByRadius/{distance}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public List<Post> getPostsByRadius(@RequestBody GeoLocation geoLocation, @PathVariable Map<String, String> pathVariable){
-        return geoLocationService.getPostsByDistanceRadius(geoLocation, Double.parseDouble(pathVariable.get("distance")));
+    @GetMapping(value="getPostsByRadius", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public List<Post> getPostsByRadius(@RequestBody GeoLocation geoLocation){
+        return geoLocationService.getPostsByDistanceRadius(geoLocation, geoLocation.getDistance());
     }
 }
+

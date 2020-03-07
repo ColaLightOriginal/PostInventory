@@ -79,6 +79,12 @@ public class GeoLocation {
                 > boundingCoordinatesList.get(1).getRadLatitude();
     }
 
+    public static boolean validateCoordinate(String coordinate){
+        Pattern coordinatePattern = Pattern.compile("(-)?[0-9]+.[0-9][0-9][0-9][0-9][0-9]");
+        Matcher matcher = coordinatePattern.matcher(coordinate);
+        return matcher.matches();
+    }
+
     public double getRadLatitude() {
         return radLatitude;
     }
@@ -103,14 +109,14 @@ public class GeoLocation {
         return longitude;
     }
 
+    public double getDistance() { return distance; }
+
+    public void setDistance(double distance) { this.distance = distance; }
+
     public static double getRADIUS() {
         return RADIUS;
     }
 
-    public static boolean validateCoordinate(String coordinate){
-        Pattern coordinatePattern = Pattern.compile("(-)?[0-9]+.[0-9][0-9][0-9][0-9][0-9]");
-        Matcher matcher = coordinatePattern.matcher(coordinate);
-        return matcher.matches();
-    }
+
 
 }
