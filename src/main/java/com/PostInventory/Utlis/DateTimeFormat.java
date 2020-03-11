@@ -4,7 +4,7 @@ import java.time.format.DateTimeFormatter;
 
 public class DateTimeFormat {
 
-    static DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE;
+    static DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
     public static String dateTimeFormat(){
         return formatter.format(LocalDate.now());

@@ -3,9 +3,16 @@ package com.PostInventory.Classes;
 import com.PostInventory.Enums.PostStatus;
 import com.PostInventory.Enums.PostType;
 import com.PostInventory.Utlis.GeoLocationUtils.GeoLocation;
+import org.apache.commons.lang3.EnumUtils;
 
 import javax.persistence.*;
 import javax.validation.ValidationException;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 @Entity
 @Table(name = "post")
@@ -45,7 +52,9 @@ public class Post {
     }
 
     public void setType(String type) {
-        this.type = type;
+        if(EnumUtils.isValidEnum(PostType.class,type))
+            this.type = type;
+        else throw new EnumConstantNotPresentException(PostType.class,type);
     }
 
     public String getStatus() {
@@ -53,7 +62,9 @@ public class Post {
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        if(EnumUtils.isValidEnum(PostStatus.class,status))
+            this.status = status;
+        else throw new EnumConstantNotPresentException(PostStatus.class, status);
     }
 
     public String getDescription() {
@@ -69,7 +80,15 @@ public class Post {
     }
 
     public void setValidDateTime(String validDateTime) {
-        this.validDateTime = validDateTime;
+        try {
+            LocalTime midnight = LocalTime.MIDNIGHT;
+            LocalDate validDate = LocalDate.now().plusDays(3);
+            LocalDateTime validDateMidnight = LocalDateTime.of(validDate, midnight);
+            String validDateTimeString = validDateMidnight.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            this.validDateTime = validDateTimeString;
+        } catch(DateTimeParseException e){
+            e.printStackTrace();
+        }
     }
 
     public String getCreateDateTime() {
@@ -77,7 +96,15 @@ public class Post {
     }
 
     public void setCreateDateTime(String createDateTime) {
-        this.createDateTime = createDateTime;
+        try {
+            LocalDate dateNow = LocalDate.now();
+            LocalTime timeNow = LocalTime.now();
+            LocalDateTime dateTimeNow = LocalDateTime.of(dateNow, timeNow);
+            String dateTimeString = dateTimeNow.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            this.createDateTime = dateTimeString;
+        } catch(DateTimeParseException e){
+            e.printStackTrace();
+        }
     }
 
     public int getCreateUser() {
