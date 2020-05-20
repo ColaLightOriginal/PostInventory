@@ -23,7 +23,7 @@ public class GeoLocationController {
 
     @GetMapping(value="getPostsByRadius", consumes = MediaType.APPLICATION_JSON_VALUE)
     public List<Post> getPostsByRadius(@RequestBody GeoLocation geoLocation){
-        return geoLocationService.getPostsByDistanceRadius(geoLocation, geoLocation.getDistance());
+        return geoLocationService.getPostsByDistanceRadius(geoLocation);
     }
 }
 

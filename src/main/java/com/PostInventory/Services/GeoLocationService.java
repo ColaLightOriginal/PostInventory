@@ -14,7 +14,7 @@ public class GeoLocationService {
     @Autowired
     private PostRepository postRepository;
 
-    public List<Post> getPostsByDistanceRadius(GeoLocation geoLocation, double distance){
-        return postRepository.getPostsWithinDistance(geoLocation, distance);
+    public List<Post> getPostsByDistanceRadius(GeoLocation geoLocation){
+        return postRepository.getPostsWithinDistance(geoLocation, geoLocation.getDistance());
     }
 }
