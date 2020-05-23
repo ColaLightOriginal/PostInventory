@@ -1,16 +1,27 @@
 package com.PostInventory.Classes;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
 
 @Entity
+@Table(name = "comment")
 public class Comment {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id", unique = true)
     private int id;
+    @Column(name="post_id", unique = false)
+    private int postId;
+    @Column(name="comment_user_id", nullable = false)
     private int postUserId;
+    @Column(name="content", nullable = false)
     private String content;
+    @Column(name="likes_count", nullable = false)
     private int likesCount;
-    private LinkedList<Integer> userLikesId = new LinkedList<Integer>();
+    @Column(name="user_likes_ids", nullable = false)
+    private int[] userLikesId;
 
     public int getId() {
         return id;
@@ -44,14 +55,20 @@ public class Comment {
         this.likesCount = likesCount;
     }
 
-    public LinkedList<Integer> getUserLikesId() {
+    public int[] getUserLikesId() {
         return userLikesId;
     }
 
-    public void setUserLikesId(LinkedList<Integer> userLikesId) {
+    public void setUserLikesId(int[] userLikesId) {
         this.userLikesId = userLikesId;
     }
 
 
+    public int getPostId() {
+        return postId;
+    }
 
+    public void setPostId(int postId) {
+        this.postId = postId;
+    }
 }
