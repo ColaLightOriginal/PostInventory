@@ -5,10 +5,8 @@ import com.PostInventory.Classes.Post;
 import com.PostInventory.Services.CommentService;
 import com.PostInventory.Services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -28,6 +26,11 @@ public class CommentControler {
     @GetMapping(value = "getComments/{postId}")
     public List<Comment> getCommentsByPostId(@PathVariable Map<String, String> pathVariable){
         return commentService.getCommentsByPostId(Integer.parseInt(pathVariable.get("postId")));
+    }
+
+    @PostMapping(value = "createComment", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void createComment(@RequestBody Comment comment){
+        commentService.createComment(comment);
     }
 
 }

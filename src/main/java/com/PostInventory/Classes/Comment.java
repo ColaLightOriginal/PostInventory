@@ -12,7 +12,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id", unique = true)
     private int id;
-    @Column(name="post_id", unique = false)
+    @Column(name="post_id", nullable = false)
     private int postId;
     @Column(name="comment_user_id", nullable = false)
     private int postUserId;
@@ -20,8 +20,6 @@ public class Comment {
     private String content;
     @Column(name="likes_count", nullable = false)
     private int likesCount;
-    @Column(name="user_likes_ids", nullable = false)
-    private int[] userLikesId;
 
     public int getId() {
         return id;
@@ -54,15 +52,6 @@ public class Comment {
     public void setLikesCount(int likesCount) {
         this.likesCount = likesCount;
     }
-
-    public int[] getUserLikesId() {
-        return userLikesId;
-    }
-
-    public void setUserLikesId(int[] userLikesId) {
-        this.userLikesId = userLikesId;
-    }
-
 
     public int getPostId() {
         return postId;

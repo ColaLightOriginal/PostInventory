@@ -1,6 +1,7 @@
 package com.PostInventory.Repositories;
 import com.PostInventory.Classes.Comment;
 import com.PostInventory.Classes.Post;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
@@ -43,6 +44,22 @@ public class CommentRepository {
         }
     }
 
+    public void createComment(Comment comment){
+        try{
+            Session session = sessionFactory.unwrap(Session.class);
+            session.beginTransaction();
+            Comment result = new Comment();
 
+            result.setContent(comment.getContent());
+            result.setLikesCount(comment.getLikesCount());
+            result.setPostUserId(comment.getPostUserId());
+            result.setPostId(comment.getPostId());
 
+            session.save(result);
+            session.getTransaction().commit();
+            session.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 }
