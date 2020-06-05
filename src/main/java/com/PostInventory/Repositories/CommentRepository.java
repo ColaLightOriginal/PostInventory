@@ -44,18 +44,27 @@ public class CommentRepository {
         }
     }
 
+    public Comment getCommentById(int commentId){
+        try{
+            Comment result = new Comment();
+            String query = "select comment from Comment comment where id=:id";
+            TypedQuery<Comment> typedQuery = sessionFactory.createQuery(query, Comment.class);
+            typedQuery.setParameter("id", commentId);
+            result = typedQuery.getSingleResult();
+            return  result;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public void createComment(Comment comment){
         try{
             Session session = sessionFactory.unwrap(Session.class);
             session.beginTransaction();
-            Comment result = new Comment();
 
-            result.setContent(comment.getContent());
-            result.setLikesCount(comment.getLikesCount());
-            result.setPostUserId(comment.getPostUserId());
-            result.setPostId(comment.getPostId());
-
-            session.save(result);
+            session.save(comment);
             session.getTransaction().commit();
             session.close();
         }catch(Exception e){

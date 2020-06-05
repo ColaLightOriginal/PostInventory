@@ -23,14 +23,18 @@ public class CommentControler {
         return commentService.getAllComments();
     }
 
-    @GetMapping(value = "getComments/{postId}")
+    @GetMapping(value = "getCommentsByPostId/{postId}")
     public List<Comment> getCommentsByPostId(@PathVariable Map<String, String> pathVariable){
         return commentService.getCommentsByPostId(Integer.parseInt(pathVariable.get("postId")));
+    }
+
+    @GetMapping(value = "getComments/{commentId}")
+    public Comment getCommentById(@PathVariable Map<String, String> pathVariable){
+        return commentService.getCommentById(Integer.parseInt(pathVariable.get("commentId")));
     }
 
     @PostMapping(value = "createComment", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void createComment(@RequestBody Comment comment){
         commentService.createComment(comment);
     }
-
 }

@@ -17,7 +17,11 @@ public class CommentService {
 
     public List<Comment> getAllComments() {return commentRepository.getAll();}
 
+    public Comment getCommentById(int commentId) { return commentRepository.getCommentById(commentId);}
+
     public List<Comment> getCommentsByPostId(int postId){return commentRepository.getPostComments(postId);}
 
     public void createComment(Comment comment){ commentRepository.createComment(comment);}
+
+
 }
