@@ -71,4 +71,17 @@ public class CommentRepository {
             e.printStackTrace();
         }
     }
+
+    public void deleteComment(int commentId){
+        try{
+            Session session = sessionFactory.unwrap(Session.class);
+            session.beginTransaction();
+            Comment comment = session.get(Comment.class, commentId);
+            session.delete(comment);
+            session.getTransaction().commit();
+            session.close();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
 }

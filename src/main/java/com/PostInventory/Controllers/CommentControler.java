@@ -37,4 +37,9 @@ public class CommentControler {
     public void createComment(@RequestBody Comment comment){
         commentService.createComment(comment);
     }
+
+    @DeleteMapping(value = "removeComment/{commentId}")
+    public void deleteComment(@PathVariable Map<String, String> pathVariable){
+        commentService.deleteComment(Integer.parseInt(pathVariable.get("commentId")));
+    }
 }
