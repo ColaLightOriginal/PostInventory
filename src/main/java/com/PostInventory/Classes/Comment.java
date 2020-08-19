@@ -61,12 +61,4 @@ public class Comment {
         this.postId = postId;
     }
 
-    public void print(){
-        System.out.println("id: " + this.getId());
-        System.out.println("postId: " + this.getPostId());
-        System.out.println("postUserId: " + this.getPostUserId());
-        System.out.println("content: " + this.getContent());
-        System.out.println("likesCount: " + this.getLikesCount());
-    }
-
 }
