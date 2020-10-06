@@ -96,6 +96,20 @@ public class PostRepository {
         }
     }
 
+    public void modifyPost(Post post){
+        try{
+            Session session = sessionFactory.unwrap(Session.class);
+            session.beginTransaction();
+            Post tmp = session.get(Post.class, post.getId());
+            session.saveOrUpdate(tmp);
+            session.getTransaction().commit();
+            session.close();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+    }
+
     public List<Post> getPostsWithinDistance(GeoLocation location, double distance){
         List<Post> resultList = new LinkedList<>();
         String query = "SELECT post FROM Post post WHERE (coordinateX >=:minLat AND coordinateX <=:maxLat) AND (coordinateY >=:minLon " +

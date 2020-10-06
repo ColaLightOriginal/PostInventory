@@ -39,4 +39,18 @@ public class PostController {
     public void deletePost(@PathVariable Map<String, String> pathVariable){
         postService.deletePost(Integer.parseInt(pathVariable.get("postId")));
     }
+
+    @PostMapping(value = "modifyPost", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void modifyPost(@RequestBody Post post ){
+        postService.modifyPost(post);
+    }
+
+    @GetMapping(value="getPostsFromCoord/{latitude}/{longitude}/{latitudeDelta}/{longitudeDelta}")
+    public List<Post> getPostsFromCoord(@PathVariable Map<String, String> pathVariable){
+        Float latitude = Float.parseFloat(pathVariable.get("latitude"));
+        Float longitude = Float.parseFloat(pathVariable.get("longitude"));
+        Float latitudeDelta = Float.parseFloat(pathVariable.get("latitudeDelta"));
+        Float longitudeDelta = Float.parseFloat(pathVariable.get("longitudeDelta"));
+        return postService.getPostsFromCoord(latitude, longitude ,latitudeDelta, longitudeDelta);
+    }
 }

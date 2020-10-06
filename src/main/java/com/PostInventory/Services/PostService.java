@@ -5,6 +5,7 @@ import com.PostInventory.Repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -29,5 +30,30 @@ public class PostService {
 
     public void deletePost(int postId){
         postRepository.deletePost(postId);
+    }
+
+    public void modifyPost(Post post){ postRepository.modifyPost(post);}
+
+    public List<Post> getPostsFromCoord(Float latitude, Float longitude,
+                                         Float latitudeDelta, Float longitudeDelta){
+        List<Post> postsList = this.getPosts();
+        List<Post> returnList = new LinkedList<>();
+        float postLatitude;
+        float postLongitude;
+        for(Post post: postsList){
+            postLatitude=Float.parseFloat(post.getCoordinateX());
+            postLongitude=Float.parseFloat(post.getCoordinateY());
+
+            float postLatitudeMinus = latitude-latitudeDelta;
+            float postLatitudePlus = latitude+latitudeDelta;
+            float postLongitudeMinus = longitude-longitudeDelta;
+            float postLongitudePlus = longitude+longitudeDelta;
+
+            if((postLatitude>latitude-latitudeDelta && postLatitude<latitude+latitudeDelta) &&
+                    (postLongitude>longitude-longitudeDelta && postLongitude<longitude+longitudeDelta)){
+                returnList.add(post);
+            }
+        }
+        return returnList;
     }
 }
