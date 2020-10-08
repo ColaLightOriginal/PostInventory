@@ -44,11 +44,6 @@ public class PostService {
             postLatitude=Float.parseFloat(post.getCoordinateX());
             postLongitude=Float.parseFloat(post.getCoordinateY());
 
-            float postLatitudeMinus = latitude-latitudeDelta;
-            float postLatitudePlus = latitude+latitudeDelta;
-            float postLongitudeMinus = longitude-longitudeDelta;
-            float postLongitudePlus = longitude+longitudeDelta;
-
             if((postLatitude>latitude-latitudeDelta && postLatitude<latitude+latitudeDelta) &&
                     (postLongitude>longitude-longitudeDelta && postLongitude<longitude+longitudeDelta)){
                 returnList.add(post);
