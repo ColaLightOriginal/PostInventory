@@ -67,7 +67,7 @@ public class PostRepository {
             Post result = new Post();
 
             result.setType(post.getType());
-            result.setStatus(post.getStatus());
+            result.setStatus("Created");
             result.setDescription(post.getDescription());
             result.setValidDateTime(post.getValidDateTime());
             result.setCreateDateTime(post.getCreateDateTime());
