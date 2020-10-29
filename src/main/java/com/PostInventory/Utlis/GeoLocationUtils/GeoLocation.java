@@ -80,7 +80,7 @@ public class GeoLocation {
     }
 
     public static boolean validateCoordinate(String coordinate){
-        Pattern coordinatePattern = Pattern.compile("(-)?[0-9]+.[0-9][0-9][0-9][0-9][0-9]");
+        Pattern coordinatePattern = Pattern.compile("(-)?[0-9]+.[0-9]+");
         Matcher matcher = coordinatePattern.matcher(coordinate);
         return matcher.matches();
     }
