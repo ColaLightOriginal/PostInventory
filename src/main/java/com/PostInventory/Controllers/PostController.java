@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping(value = "api/posts/post")
+@RequestMapping(value = "post")
 @RestController
 public class PostController {
 
