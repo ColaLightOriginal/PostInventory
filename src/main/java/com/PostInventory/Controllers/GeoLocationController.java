@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping(value = "geoLocation")
+@RequestMapping(value = "api/posts/geoLocation")
 @Controller
 public class GeoLocationController {
 
