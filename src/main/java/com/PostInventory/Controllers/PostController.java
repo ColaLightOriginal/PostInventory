@@ -1,8 +1,12 @@
 package com.PostInventory.Controllers;
 import com.PostInventory.Classes.Post;
+import com.PostInventory.Classes.ResponseTransfer;
 import com.PostInventory.Services.PostService;
+import org.aspectj.apache.bcel.classfile.Code;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,9 +34,15 @@ public class PostController {
         return postService.getPostByPostId( Integer.parseInt(pathVariable.get("postId")));
     }
 
+    @ResponseBody
     @PostMapping(value = "createPost", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createPost(@RequestBody Post post ){
-        postService.createPost(post);
+    public ResponseTransfer createPost(@RequestBody Post post ){
+        try {
+            postService.createPost(post);
+            return new ResponseTransfer("Ok", "200", "Post Added");
+        }catch(Exception e){
+            return new ResponseTransfer("Error", "500", "Internal server error");
+        }
     }
 
     @DeleteMapping(value = "removePost/{postId}")
