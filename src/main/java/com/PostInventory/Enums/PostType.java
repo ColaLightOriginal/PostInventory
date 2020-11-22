@@ -5,5 +5,5 @@ public enum PostType {
     Question,
     Help,
     Alert,
-    Offert
+    Offer
 }
