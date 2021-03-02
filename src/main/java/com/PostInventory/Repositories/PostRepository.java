@@ -7,8 +7,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.Optional;
 public class PostRepository {
 
     @Autowired
+    @PersistenceContext
     private EntityManager sessionFactory;
 
     public List<Post> getAll(){
@@ -29,7 +32,7 @@ public class PostRepository {
             return resultList;
         }
         catch(Exception e){
-                System.out.println(e);
+                e.printStackTrace();
                 return null;
         }
     }
@@ -60,10 +63,9 @@ public class PostRepository {
         }
     }
 
+    @Transactional
     public void createPost(Post post){
         try{
-            Session session = sessionFactory.unwrap(Session.class);
-            session.beginTransaction();
             Post result = new Post();
 
             result.setType(post.getType());
@@ -74,10 +76,10 @@ public class PostRepository {
             result.setCreateUser(post.getCreateUser());
             result.setCoordinateX(post.getCoordinateX());
             result.setCoordinateY(post.getCoordinateY());
+            result.setTitle(post.getTitle());
+            result.setTag(post.getTag());
 
-            session.save(result);
-            session.getTransaction().commit();
-            session.close();
+            sessionFactory.persist(result);
         }catch(Exception e){
             e.printStackTrace();
         }

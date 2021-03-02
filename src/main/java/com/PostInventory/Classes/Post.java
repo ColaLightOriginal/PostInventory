@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.LinkedList;
 
 @Entity
 @Table(name = "post")
@@ -26,6 +27,8 @@ public class Post {
     private String type;
     @Column(name="status", nullable = false)
     private String status;
+    @Column(name="title", nullable= false)
+    private String title;
     @Column(name="description", nullable = false)
     private String description;
     @Column(name="valid_date_time", nullable = true)
@@ -38,6 +41,8 @@ public class Post {
     private String coordinateX;
     @Column(name="coordinate_y", nullable = true)
     private String coordinateY;
+    @Column(name="tag", nullable=true)
+    private String tag;
 
     public int getId() {
         return id;
@@ -135,5 +140,21 @@ public class Post {
             ValidationException e = new ValidationException();
             e.printStackTrace();
         }
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 }

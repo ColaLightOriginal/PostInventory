@@ -1,12 +1,10 @@
 package com.PostInventory.Controllers;
 import com.PostInventory.Classes.Post;
+import com.PostInventory.Wrappers.PostImagesWrapper;
 import com.PostInventory.Classes.ResponseTransfer;
 import com.PostInventory.Services.PostService;
-import org.aspectj.apache.bcel.classfile.Code;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -54,6 +52,10 @@ public class PostController {
     public void modifyPost(@RequestBody Post post ){
         postService.modifyPost(post);
     }
+
+    @PostMapping(value = "createPostWithImages", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void createPostWithImages(@RequestBody PostImagesWrapper postImagesWrapper){
+        postService.createPostWithImages(postImagesWrapper.getPost(), postImagesWrapper.getImageUrls());}
 
     @GetMapping(value="getPostsFromCoord/{latitude}/{longitude}/{latitudeDelta}/{longitudeDelta}")
     public List<Post> getPostsFromCoord(@PathVariable Map<String, String> pathVariable){

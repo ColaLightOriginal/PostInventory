@@ -35,5 +35,4 @@ public class ResponseTransfer {
         this.message = message;
     }
 
-
 }

@@ -1,10 +1,13 @@
 package com.PostInventory.Services;
 
+import com.PostInventory.Classes.ImageUrls;
 import com.PostInventory.Classes.Post;
+import com.PostInventory.Repositories.ImageUrlsRepository;
 import com.PostInventory.Repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,6 +16,8 @@ public class PostService {
 
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private ImageUrlsRepository imageUrlsRepository;
 
     public List<Post> getPosts(){
         return postRepository.getAll();
@@ -33,6 +38,11 @@ public class PostService {
     }
 
     public void modifyPost(Post post){ postRepository.modifyPost(post);}
+
+    public void createPostWithImages(Post post, List<ImageUrls> imageUrls){
+        postRepository.createPost(post);
+        for(ImageUrls i: imageUrls) imageUrlsRepository.createPostImageUrl(i);
+    }
 
     public List<Post> getPostsFromCoord(Float latitude, Float longitude,
                                          Float latitudeDelta, Float longitudeDelta){
