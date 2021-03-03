@@ -7,6 +7,7 @@ import org.apache.commons.lang3.EnumUtils;
 
 import javax.persistence.*;
 import javax.validation.ValidationException;
+import java.sql.Timestamp;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -43,6 +44,10 @@ public class Post {
     private String coordinateY;
     @Column(name="tag", nullable=true)
     private String tag;
+    @Column(name="event_date", nullable = true)
+    private String eventDate;
+    @Column(name="price")
+    private float price;
 
     public int getId() {
         return id;
@@ -156,5 +161,21 @@ public class Post {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public String getEventDate() {
+        return eventDate;
+    }
+
+    public void setEventDate(String eventDate) {
+        this.eventDate = eventDate;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
     }
 }

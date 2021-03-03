@@ -1,6 +1,11 @@
 package com.PostInventory.Classes;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,6 +25,8 @@ public class Comment {
     private String content;
     @Column(name="likes_count", nullable = false)
     private int likesCount;
+    @Column(name="create_date_time", nullable= true)
+    private String createDateTime;
 
     public int getId() {
         return id;
@@ -59,6 +66,22 @@ public class Comment {
 
     public void setPostId(int postId) {
         this.postId = postId;
+    }
+
+    public String getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(String createDateTime) {
+        try {
+            LocalDate dateNow = LocalDate.now();
+            LocalTime timeNow = LocalTime.now();
+            LocalDateTime dateTimeNow = LocalDateTime.of(dateNow, timeNow);
+            String dateTimeString = dateTimeNow.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            this.createDateTime = dateTimeString;
+        } catch(DateTimeParseException e){
+            e.printStackTrace();
+        }
     }
 
 }

@@ -66,20 +66,21 @@ public class PostRepository {
     @Transactional
     public void createPost(Post post){
         try{
-            Post result = new Post();
+//            Post result = new Post();
+//            result.setType(post.getType());
+//            result.setStatus("Created");
+//            result.setDescription(post.getDescription());
+//            result.setValidDateTime(post.getValidDateTime());
+//            result.setCreateDateTime(post.getCreateDateTime());
+//            result.setCreateUser(post.getCreateUser());
+//            result.setCoordinateX(post.getCoordinateX());
+//            result.setCoordinateY(post.getCoordinateY());
+//            result.setTitle(post.getTitle());
+//            result.setTag(post.getTag());
+//            result.setEventDate(post.getEventDate());
+//            result.setPrice(post.getPrice());
 
-            result.setType(post.getType());
-            result.setStatus("Created");
-            result.setDescription(post.getDescription());
-            result.setValidDateTime(post.getValidDateTime());
-            result.setCreateDateTime(post.getCreateDateTime());
-            result.setCreateUser(post.getCreateUser());
-            result.setCoordinateX(post.getCoordinateX());
-            result.setCoordinateY(post.getCoordinateY());
-            result.setTitle(post.getTitle());
-            result.setTag(post.getTag());
-
-            sessionFactory.persist(result);
+            sessionFactory.persist(post);
         }catch(Exception e){
             e.printStackTrace();
         }
