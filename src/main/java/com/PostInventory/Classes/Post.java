@@ -46,8 +46,8 @@ public class Post {
     private String tag;
     @Column(name="event_date", nullable = true)
     private String eventDate;
-    @Column(name="price")
-    private float price;
+    @Column(name="price", nullable = true)
+    private String price;
 
     public int getId() {
         return id;
@@ -171,11 +171,11 @@ public class Post {
         this.eventDate = eventDate;
     }
 
-    public float getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 }
