@@ -64,6 +64,7 @@ public class CommentRepository {
             Session session = sessionFactory.unwrap(Session.class);
             session.beginTransaction();
 
+            comment.setCreateDateTime();
             session.save(comment);
             session.getTransaction().commit();
             session.close();

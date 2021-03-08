@@ -25,8 +25,12 @@ public class Comment {
     private String content;
     @Column(name="likes_count", nullable = false)
     private int likesCount;
-    @Column(name="create_date_time", nullable= true)
+    @Column(name="create_date_time", nullable = false)
     private String createDateTime;
+
+    public Comment(){
+        this.setCreateDateTime();
+    }
 
     public int getId() {
         return id;
@@ -72,7 +76,7 @@ public class Comment {
         return createDateTime;
     }
 
-    public void setCreateDateTime(String createDateTime) {
+    public void setCreateDateTime() {
         try {
             LocalDate dateNow = LocalDate.now();
             LocalTime timeNow = LocalTime.now();

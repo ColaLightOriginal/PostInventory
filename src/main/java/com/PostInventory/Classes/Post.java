@@ -49,6 +49,12 @@ public class Post {
     @Column(name="price", nullable = true)
     private String price;
 
+    public Post(){
+        this.setStatus("Created");
+        this.setCreateDateTime();
+        this.setValidDateTime();
+    }
+
     public int getId() {
         return id;
     }
@@ -89,7 +95,7 @@ public class Post {
         return validDateTime;
     }
 
-    public void setValidDateTime(String validDateTime) {
+    public void setValidDateTime() {
         try {
             LocalTime midnight = LocalTime.MIDNIGHT;
             LocalDate validDate = LocalDate.now().plusDays(3);
@@ -105,7 +111,7 @@ public class Post {
         return createDateTime;
     }
 
-    public void setCreateDateTime(String createDateTime) {
+    public void setCreateDateTime() {
         try {
             LocalDate dateNow = LocalDate.now();
             LocalTime timeNow = LocalTime.now();

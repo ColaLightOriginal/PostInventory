@@ -79,7 +79,6 @@ public class PostRepository {
 //            result.setTag(post.getTag());
 //            result.setEventDate(post.getEventDate());
 //            result.setPrice(post.getPrice());
-
             sessionFactory.persist(post);
         }catch(Exception e){
             e.printStackTrace();
