@@ -4,7 +4,10 @@ import com.PostInventory.Classes.Post;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,6 +16,7 @@ import java.util.List;
 public class CommentRepository {
 
     @Autowired
+    @PersistenceContext
     private EntityManager sessionFactory;
 
     public List<Comment> getAll(){
@@ -59,15 +63,10 @@ public class CommentRepository {
         }
     }
 
+    @Transactional
     public void createComment(Comment comment){
         try{
-            Session session = sessionFactory.unwrap(Session.class);
-            session.beginTransaction();
-
-            comment.setCreateDateTime();
-            session.save(comment);
-            session.getTransaction().commit();
-            session.close();
+            sessionFactory.persist(comment);
         }catch(Exception e){
             e.printStackTrace();
         }
