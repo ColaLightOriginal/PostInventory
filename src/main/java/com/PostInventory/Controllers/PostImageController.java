@@ -1,6 +1,7 @@
 package com.PostInventory.Controllers;
 
 import com.PostInventory.Classes.PostImage;
+import com.PostInventory.Classes.ResponseTransfer;
 import com.PostInventory.Services.PostImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -18,8 +19,12 @@ public class PostImageController {
     private PostImageService postImageService;
 
     @PostMapping(value = "createPostImage", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createPostImage(@RequestBody PostImage postImage){
-        postImageService.createPostImage(postImage);
+    public ResponseTransfer createPostImage(@RequestBody PostImage postImage){
+        try {
+            postImageService.createPostImage(postImage);
+            return new ResponseTransfer("Ok", "200", "PostImages added");
+        } catch(Exception e){
+               return new ResponseTransfer("Error", "500", "Internal Server Error: " + e.getMessage());
+        }
     }
-
 }

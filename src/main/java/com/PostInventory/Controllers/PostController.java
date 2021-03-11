@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +41,7 @@ public class PostController {
             postService.createPost(post);
             return new ResponseTransfer("Ok", "200", "Post Added");
         }catch(Exception e){
-            return new ResponseTransfer("Error", "500", "Internal server error");
+            return new ResponseTransfer("Error", "500", "Internal server error: " + e.getMessage() );
         }
     }
 

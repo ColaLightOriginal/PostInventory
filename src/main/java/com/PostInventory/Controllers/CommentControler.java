@@ -2,6 +2,7 @@ package com.PostInventory.Controllers;
 
 import com.PostInventory.Classes.Comment;
 import com.PostInventory.Classes.Post;
+import com.PostInventory.Classes.ResponseTransfer;
 import com.PostInventory.Services.CommentService;
 import com.PostInventory.Services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,13 @@ public class CommentControler {
     }
 
     @PostMapping(value = "createComment", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createComment(@RequestBody Comment comment){
-        commentService.createComment(comment);
+    public ResponseTransfer createComment(@RequestBody Comment comment){
+        try{
+            commentService.createComment(comment);
+            return new ResponseTransfer("Ok", "200", "Comment added");
+        } catch( Exception e){
+            return new ResponseTransfer("Error", "500", "Internal server error: " + e.getMessage());
+        }
     }
 
     @DeleteMapping(value = "removeComment/{commentId}")
