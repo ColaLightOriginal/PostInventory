@@ -187,7 +187,7 @@ public class Post {
 
     public void log(){
         System.out.println("id: " + this.id +
-                            "coordinateX: " + this.coordinateY +
+                            "coordinateX: " + this.coordinateX +
                             " coordinateY: " + this.coordinateY +
                             " type: " + this.type +
                             " status: " + this.status);
