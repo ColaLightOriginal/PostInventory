@@ -39,7 +39,8 @@ public class PostController {
     public ResponseTransfer createPost(@RequestBody Post post ){
         try {
             postService.createPost(post);
-            return new ResponseTransfer("Ok", "200", "Post Added");
+            post.log();
+            return new ResponseTransfer("Ok", "200", "Post Added:" );
         }catch(Exception e){
             return new ResponseTransfer("Error", "500", "Internal server error: " + e.getMessage() );
         }

@@ -184,4 +184,12 @@ public class Post {
     public void setPrice(String price) {
         this.price = price;
     }
+
+    public void log(){
+        System.out.println("id: " + this.id
+                            "coordinateX: " + this.coordinateY +
+                            " coordinateY: " + this.coordinateY +
+                            " type: " + this.type +
+                            " status: " + this.status);
+    }
 }
