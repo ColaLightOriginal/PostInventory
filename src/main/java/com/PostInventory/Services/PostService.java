@@ -1,6 +1,7 @@
 package com.PostInventory.Services;
 
 import com.PostInventory.Classes.ImageUrls;
+import com.PostInventory.Classes.LikesUnlikes;
 import com.PostInventory.Classes.Post;
 import com.PostInventory.Repositories.ImageUrlsRepository;
 import com.PostInventory.Repositories.PostRepository;
@@ -60,5 +61,22 @@ public class PostService {
             }
         }
         return returnList;
+    }
+
+    public void addOrUpdateLikeOrUnlike(LikesUnlikes likesUnlikes){
+        int operationUser = likesUnlikes.getUserId();
+        int postId = likesUnlikes.getPostId();
+        int userId = likesUnlikes.getUserId();
+        Boolean isPostHasOperation = postRepository.checkIfPostHasUserOperation(operationUser, postId);
+
+        if(!isPostHasOperation) postRepository.addLikeOrUnlike(likesUnlikes);
+        else {
+            Boolean likeOrUnlike = postRepository.getLikesUnlikeUserPostOperation(operationUser, postId);
+            if(likeOrUnlike && likesUnlikes.getOperation() ||
+                (!likeOrUnlike && !likesUnlikes.getOperation())) return;
+
+            postRepository.updateLikesUnlikesOperation(likesUnlikes,
+                    postRepository.getLikesUpdatesIdByUserPostId(userId,postId));
+        }
     }
 }

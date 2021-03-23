@@ -1,5 +1,7 @@
 package com.PostInventory.Classes;
 
+import com.PostInventory.Utlis.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -78,11 +80,7 @@ public class Comment {
 
     public void setCreateDateTime() {
         try {
-            LocalDate dateNow = LocalDate.now();
-            LocalTime timeNow = LocalTime.now();
-            LocalDateTime dateTimeNow = LocalDateTime.of(dateNow, timeNow);
-            String dateTimeString = dateTimeNow.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-            this.createDateTime = dateTimeString;
+            this.createDateTime = DateTimeFormat.getZonedDateTime().toString();
         } catch(DateTimeParseException e){
             e.printStackTrace();
         }

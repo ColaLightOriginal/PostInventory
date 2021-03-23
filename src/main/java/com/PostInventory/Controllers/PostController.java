@@ -1,4 +1,5 @@
 package com.PostInventory.Controllers;
+import com.PostInventory.Classes.LikesUnlikes;
 import com.PostInventory.Classes.Post;
 import com.PostInventory.Wrappers.PostImagesWrapper;
 import com.PostInventory.Classes.ResponseTransfer;
@@ -67,5 +68,10 @@ public class PostController {
         Float latitudeDelta = Float.parseFloat(pathVariable.get("latitudeDelta"));
         Float longitudeDelta = Float.parseFloat(pathVariable.get("longitudeDelta"));
         return postService.getPostsFromCoord(latitude, longitude ,latitudeDelta, longitudeDelta);
+    }
+
+    @PostMapping(value = "addLikeOrUnlike", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void addOrUpdateLikeOrUnlike(@RequestBody LikesUnlikes likesUnlikes){
+        postService.addOrUpdateLikeOrUnlike(likesUnlikes);
     }
 }

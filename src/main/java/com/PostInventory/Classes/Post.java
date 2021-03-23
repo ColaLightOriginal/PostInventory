@@ -2,19 +2,13 @@ package com.PostInventory.Classes;
 
 import com.PostInventory.Enums.PostStatus;
 import com.PostInventory.Enums.PostType;
+import com.PostInventory.Utlis.DateTimeFormat;
 import com.PostInventory.Utlis.GeoLocationUtils.GeoLocation;
 import org.apache.commons.lang3.EnumUtils;
 
 import javax.persistence.*;
 import javax.validation.ValidationException;
-import java.sql.Timestamp;
-import java.time.DateTimeException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.LinkedList;
 
 @Entity
 @Table(name = "post")
@@ -48,11 +42,17 @@ public class Post {
     private String eventDate;
     @Column(name="price", nullable = true)
     private String price;
+    @Column(name="likesCount", nullable = false)
+    private int likesCount;
+    @Column(name="unlikesCount", nullable = false)
+    private int unlikesCount;
 
     public Post(){
         this.setStatus("Created");
         this.setCreateDateTime();
         this.setValidDateTime();
+        this.setLikesCount(0);
+        this.setUnlikesCount(0);
     }
 
     public int getId() {
@@ -97,11 +97,7 @@ public class Post {
 
     public void setValidDateTime() {
         try {
-            LocalTime midnight = LocalTime.MIDNIGHT;
-            LocalDate validDate = LocalDate.now().plusDays(3);
-            LocalDateTime validDateMidnight = LocalDateTime.of(validDate, midnight);
-            String validDateTimeString = validDateMidnight.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-            this.validDateTime = validDateTimeString;
+            this.validDateTime = DateTimeFormat.getZonedDateTime().plusDays(3).toString();
         } catch(DateTimeParseException e){
             e.printStackTrace();
         }
@@ -113,11 +109,7 @@ public class Post {
 
     public void setCreateDateTime() {
         try {
-            LocalDate dateNow = LocalDate.now();
-            LocalTime timeNow = LocalTime.now();
-            LocalDateTime dateTimeNow = LocalDateTime.of(dateNow, timeNow);
-            String dateTimeString = dateTimeNow.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-            this.createDateTime = dateTimeString;
+            this.createDateTime = DateTimeFormat.getZonedDateTime().toString();
         } catch(DateTimeParseException e){
             e.printStackTrace();
         }
@@ -185,9 +177,25 @@ public class Post {
         this.price = price;
     }
 
+    public int getLikesCount() {
+        return likesCount;
+    }
+
+    public void setLikesCount(int likesCount) {
+        this.likesCount = likesCount;
+    }
+
+    public int getUnlikesCount() {
+        return unlikesCount;
+    }
+
+    public void setUnlikesCount(int unlikesCount) {
+        this.unlikesCount = unlikesCount;
+    }
+
     public void log(){
-        System.out.println("id: " + this.id +
-                            "coordinateX: " + this.coordinateX +
+        System.out.println(" id: " + this.id +
+                            " coordinateX: " + this.coordinateX +
                             " coordinateY: " + this.coordinateY +
                             " type: " + this.type +
                             " status: " + this.status);
