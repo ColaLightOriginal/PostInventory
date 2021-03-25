@@ -10,6 +10,8 @@ import javax.persistence.*;
 import javax.validation.ValidationException;
 import java.time.format.DateTimeParseException;
 
+import static com.PostInventory.Utlis.DateTimeFormat.getCentralTime;
+
 @Entity
 @Table(name = "post")
 public class Post {
@@ -97,7 +99,7 @@ public class Post {
 
     public void setValidDateTime() {
         try {
-            this.validDateTime = DateTimeFormat.getZonedDateTime().plusDays(3).toString();
+            this.validDateTime = getCentralTime().toString();
         } catch(DateTimeParseException e){
             e.printStackTrace();
         }
@@ -109,7 +111,7 @@ public class Post {
 
     public void setCreateDateTime() {
         try {
-            this.createDateTime = DateTimeFormat.getZonedDateTime().toString();
+            this.createDateTime = getCentralTime().toString();
         } catch(DateTimeParseException e){
             e.printStackTrace();
         }

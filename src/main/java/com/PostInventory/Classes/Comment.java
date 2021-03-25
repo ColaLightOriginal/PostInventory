@@ -11,6 +11,8 @@ import java.time.format.DateTimeParseException;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.PostInventory.Utlis.DateTimeFormat.getCentralTime;
+
 @Entity
 @Table(name = "comment")
 public class Comment {
@@ -80,7 +82,7 @@ public class Comment {
 
     public void setCreateDateTime() {
         try {
-            this.createDateTime = DateTimeFormat.getZonedDateTime().toString();
+            this.createDateTime = getCentralTime().toString();
         } catch(DateTimeParseException e){
             e.printStackTrace();
         }
