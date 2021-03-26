@@ -40,11 +40,6 @@ public class PostService {
 
     public void modifyPost(Post post){ postRepository.modifyPost(post);}
 
-    public void createPostWithImages(Post post, List<ImageUrls> imageUrls){
-        postRepository.createPost(post);
-        for(ImageUrls i: imageUrls) imageUrlsRepository.createPostImageUrl(i);
-    }
-
     public List<Post> getPostsFromCoord(Float latitude, Float longitude,
                                          Float latitudeDelta, Float longitudeDelta){
         List<Post> postsList = this.getPosts();
@@ -78,5 +73,14 @@ public class PostService {
             postRepository.updateLikesUnlikesOperation(likesUnlikes,
                     postRepository.getLikesUpdatesIdByUserPostId(userId,postId));
         }
+    }
+
+    public void createPostWithImages(Post post, List<ImageUrls> imageUrls){
+        postRepository.createPost(post);
+        for(ImageUrls i: imageUrls) imageUrlsRepository.createPostImageUrl(i, post.getId());
+    }
+
+    public void addImageToPost(List<ImageUrls> imageUrls){
+        for(ImageUrls i: imageUrls) imageUrlsRepository.createPostImageUrl(i, i.getPostId());
     }
 }

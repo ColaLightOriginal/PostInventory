@@ -34,12 +34,12 @@ public class ImageUrlsRepository {
     }
 
     @Transactional
-    public void createPostImageUrl(ImageUrls imageUrls){
+    public void createPostImageUrl(ImageUrls imageUrls, int postId){
         try{
             ImageUrls result = new ImageUrls();
 
             result.setImageUrlId(imageUrls.getImageUrlId());
-            result.setPostId(imageUrls.getPostId());
+            result.setPostId(postId);
 
             sessionFactory.persist(result);
         }catch(Exception e){

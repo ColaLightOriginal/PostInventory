@@ -1,4 +1,5 @@
 package com.PostInventory.Controllers;
+import com.PostInventory.Classes.ImageUrls;
 import com.PostInventory.Classes.LikesUnlikes;
 import com.PostInventory.Classes.Post;
 import com.PostInventory.Wrappers.PostImagesWrapper;
@@ -73,5 +74,10 @@ public class PostController {
     @PostMapping(value = "addLikeOrUnlike", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addOrUpdateLikeOrUnlike(@RequestBody LikesUnlikes likesUnlikes){
         postService.addOrUpdateLikeOrUnlike(likesUnlikes);
+    }
+
+    @PostMapping(value="addImageToPost", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void addImageToPost(@RequestBody List<ImageUrls> imageUrlsList){
+        postService.addImageToPost(imageUrlsList);
     }
 }
