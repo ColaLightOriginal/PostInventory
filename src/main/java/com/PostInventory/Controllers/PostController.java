@@ -44,7 +44,7 @@ public class PostController {
             post.log();
             return new ResponseTransfer("Ok", "200", "Post Added:" );
         }catch(Exception e){
-            return new ResponseTransfer("Error", "500", "Internal server error: " + e.getMessage() );
+            return new ResponseTransfer("Error: createPost", "500", "Internal server error: " + e.getMessage() );
         }
     }
 
@@ -54,13 +54,25 @@ public class PostController {
     }
 
     @PostMapping(value = "modifyPost", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void modifyPost(@RequestBody Post post ){
-        postService.modifyPost(post);
+    public ResponseTransfer modifyPost(@RequestBody Post post ){
+        try {
+            post.log();
+            postService.modifyPost(post);
+            return new ResponseTransfer("Ok", "200", "Post Added:" );
+        } catch (Exception e){
+            return new ResponseTransfer("Error: modifyPost", "500", "Internal server error: " + e.getMessage() );
+        }
     }
 
     @PostMapping(value = "createPostWithImages", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createPostWithImages(@RequestBody PostImagesWrapper postImagesWrapper){
-        postService.createPostWithImages(postImagesWrapper.getPost(), postImagesWrapper.getImageUrls());}
+    public ResponseTransfer createPostWithImages(@RequestBody PostImagesWrapper postImagesWrapper) {
+        try {
+            postService.createPostWithImages(postImagesWrapper.getPost(), postImagesWrapper.getImageUrls());
+            return new ResponseTransfer("Ok", "200", "Post Added:" );
+        } catch (Exception e) {
+            return new ResponseTransfer("Error: modifyPost", "500", "Internal server error: " + e.getMessage());
+        }
+    }
 
     @GetMapping(value="getPostsFromCoord/{latitude}/{longitude}/{latitudeDelta}/{longitudeDelta}")
     public List<Post> getPostsFromCoord(@PathVariable Map<String, String> pathVariable){

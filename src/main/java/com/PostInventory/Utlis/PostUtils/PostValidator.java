@@ -35,4 +35,5 @@ public class PostValidator {
         return post.getTitle() == null || post.getDescription() == null ||
                 post.getPrice() == null;
     }
+
 }
