@@ -23,15 +23,18 @@ public class PostValidator {
     }
 
     private static boolean checkStandardFields(Post post){
+        post.log();
         return post.getTitle() == null || post.getDescription() == null;
     }
 
     private static boolean checkEventFields(Post post){
+        post.log();
         return post.getTitle() == null || post.getDescription() == null ||
                 post.getPrice() == null || post.getEventDate() == null;
     }
 
     private static boolean checkOfferFields(Post post){
+        post.log();
         return post.getTitle() == null || post.getDescription() == null ||
                 post.getPrice() == null;
     }
