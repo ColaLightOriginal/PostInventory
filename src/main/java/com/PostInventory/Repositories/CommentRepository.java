@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.LinkedList;
 import java.util.List;
@@ -82,6 +83,20 @@ public class CommentRepository {
             session.close();
         }catch(Exception e){
             System.out.println(e);
+        }
+    }
+
+    public Long getCommentsCountByPostId(int postId){
+        try{
+            String query = "select count(*) from Comment comment where post_id=:postId";
+            Query typedQuery= sessionFactory.createQuery(query);
+            typedQuery.setParameter("postId", postId);
+            Long result = (Long) typedQuery.getSingleResult();
+            return result;
+        }catch(Exception e){
+            e.printStackTrace();
+            long ret = -1;
+            return ret;
         }
     }
 }

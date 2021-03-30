@@ -48,4 +48,9 @@ public class CommentControler {
     public void deleteComment(@PathVariable Map<String, String> pathVariable){
         commentService.deleteComment(Integer.parseInt(pathVariable.get("commentId")));
     }
+
+    @GetMapping(value = "getCommentsCount/{postId}")
+    public long getCommentsCountByPostId(@PathVariable Map<String, String> pathVariable){
+        return commentService.getCommentsCountByPostId(Integer.parseInt(pathVariable.get("postId")));
+    }
 }

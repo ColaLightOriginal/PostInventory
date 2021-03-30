@@ -24,4 +24,6 @@ public class CommentService {
     public void createComment(Comment comment){ commentRepository.createComment(comment);}
 
     public void deleteComment(int commentId){ commentRepository.deleteComment(commentId);}
+
+    public long getCommentsCountByPostId(int postId){ return commentRepository.getCommentsCountByPostId(postId);}
 }
