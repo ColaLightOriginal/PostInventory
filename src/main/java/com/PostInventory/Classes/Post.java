@@ -200,6 +200,10 @@ public class Post {
                             " coordinateX: " + this.coordinateX +
                             " coordinateY: " + this.coordinateY +
                             " type: " + this.type +
-                            " status: " + this.status);
+                            " status: " + this.status +
+                            " title: " + this.title+
+                            " description: " + this.description +
+                            " price: " + this.price +
+                            " eventDate: " + this.eventDate);
     }
 }
