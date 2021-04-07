@@ -32,7 +32,7 @@ public class PostService {
         return postRepository.getUserPosts(userId);
     }
 
-    public void createPost(Post post){ postRepository.createPost(post); }
+    public void createPost(Post post) throws Exception { postRepository.createPost(post); }
 
     public void deletePost(int postId){
         postRepository.deletePost(postId);
@@ -75,7 +75,7 @@ public class PostService {
         }
     }
 
-    public void createPostWithImages(Post post, List<ImageUrls> imageUrls){
+    public void createPostWithImages(Post post, List<ImageUrls> imageUrls) throws Exception{
         postRepository.createPost(post);
         for(ImageUrls i: imageUrls) imageUrlsRepository.createPostImageUrl(i, post.getId());
     }

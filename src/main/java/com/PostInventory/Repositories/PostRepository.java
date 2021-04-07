@@ -63,12 +63,13 @@ public class PostRepository {
     }
 
     @Transactional
-    public void createPost(Post post){
+    public void createPost(Post post) throws Exception{
         try{
             PostValidator.validatePost(post);
             sessionFactory.persist(post);
         }catch(Exception e){
             e.printStackTrace();
+            throw new Exception();
         }
     }
 

@@ -2,9 +2,12 @@ package com.PostInventory.Controllers;
 import com.PostInventory.Classes.ImageUrls;
 import com.PostInventory.Classes.LikesUnlikes;
 import com.PostInventory.Classes.Post;
+import com.PostInventory.DTOs.PostDTO;
 import com.PostInventory.Wrappers.PostImagesWrapper;
 import com.PostInventory.Classes.ResponseTransfer;
 import com.PostInventory.Services.PostService;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +23,13 @@ public class PostController {
 
     @Autowired
     private PostService postService;
+    private ModelMapper modelMapper = new ModelMapper();
+
 
     @GetMapping(value = "getPosts")
-    public List<Post> getPosts() {
-        return postService.getPosts();
+    public List<PostDTO> getPosts() {
+        List<Post> postsList = postService.getPosts();
+        return modelMapper.map(postsList, new TypeToken<List<PostDTO>>() {}.getType());
     }
 
     @GetMapping(value = "getUserPosts/{userId}")
@@ -44,7 +50,7 @@ public class PostController {
             post.log();
             return new ResponseTransfer("Ok", "200", "Post Added:" );
         }catch(Exception e){
-            return new ResponseTransfer("Error: createPost", "500", "Internal server error: " + e.getMessage() );
+            return new ResponseTransfer("Error: createPost", "500", "Internal server error: " + e.getMessage());
         }
     }
 
@@ -60,7 +66,7 @@ public class PostController {
             postService.modifyPost(post);
             return new ResponseTransfer("Ok", "200", "Post Added:" );
         } catch (Exception e){
-            return new ResponseTransfer("Error: modifyPost", "500", "Internal server error: " + e.getMessage() );
+            return new ResponseTransfer("Error: modifyPost", "500", "Internal server error: " + e.getMessage());
         }
     }
 
@@ -75,12 +81,14 @@ public class PostController {
     }
 
     @GetMapping(value="getPostsFromCoord/{latitude}/{longitude}/{latitudeDelta}/{longitudeDelta}")
-    public List<Post> getPostsFromCoord(@PathVariable Map<String, String> pathVariable){
+    public List<PostDTO> getPostsFromCoord(@PathVariable Map<String, String> pathVariable){
         Float latitude = Float.parseFloat(pathVariable.get("latitude"));
         Float longitude = Float.parseFloat(pathVariable.get("longitude"));
         Float latitudeDelta = Float.parseFloat(pathVariable.get("latitudeDelta"));
         Float longitudeDelta = Float.parseFloat(pathVariable.get("longitudeDelta"));
-        return postService.getPostsFromCoord(latitude, longitude ,latitudeDelta, longitudeDelta);
+
+        List<Post> postsList =  postService.getPostsFromCoord(latitude, longitude ,latitudeDelta, longitudeDelta);
+        return modelMapper.map(postsList, new TypeToken<List<PostDTO>>() {}.getType());
     }
 
     @PostMapping(value = "addLikeOrUnlike", consumes = MediaType.APPLICATION_JSON_VALUE)
