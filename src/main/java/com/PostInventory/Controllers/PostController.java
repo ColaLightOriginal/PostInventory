@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -86,6 +84,20 @@ public class PostController {
         Float longitude = Float.parseFloat(pathVariable.get("longitude"));
         Float latitudeDelta = Float.parseFloat(pathVariable.get("latitudeDelta"));
         Float longitudeDelta = Float.parseFloat(pathVariable.get("longitudeDelta"));
+
+        List<Post> postsList =  postService.getPostsFromCoord(latitude, longitude ,latitudeDelta, longitudeDelta);
+        return modelMapper.map(postsList, new TypeToken<List<PostDTO>>() {}.getType());
+    }
+
+    @GetMapping(value="getPostsFromCoordWithinRadius/{latitude}/{longitude}/{radiusInKm}")
+    public List<PostDTO> getPostsFromCoordWithinRadius(@PathVariable Map<String, String> pathVariable){
+        Float latitude = Float.parseFloat(pathVariable.get("latitude"));
+        Float longitude = Float.parseFloat(pathVariable.get("longitude"));
+        Float latitudeDelta = Float.parseFloat(pathVariable.get("latitudeDelta"));
+        Float longitudeDelta = Float.parseFloat(pathVariable.get("longitudeDelta"));
+
+        latitudeDelta = latitudeDelta/100;
+        longitudeDelta = longitudeDelta/100;
 
         List<Post> postsList =  postService.getPostsFromCoord(latitude, longitude ,latitudeDelta, longitudeDelta);
         return modelMapper.map(postsList, new TypeToken<List<PostDTO>>() {}.getType());

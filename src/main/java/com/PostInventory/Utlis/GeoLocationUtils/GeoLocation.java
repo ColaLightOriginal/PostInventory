@@ -22,8 +22,7 @@ public class GeoLocation {
 
     private static final double RADIUS = 6371;
 
-
-    public GeoLocation(double latitude, double longitude, double distance){
+    GeoLocation(double latitude, double longitude, double distance){
         this.latitude = latitude;
         this.longitude = longitude;
         this.distance = distance;
@@ -116,7 +115,5 @@ public class GeoLocation {
     public static double getRADIUS() {
         return RADIUS;
     }
-
-
 
 }
