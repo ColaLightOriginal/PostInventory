@@ -5,6 +5,7 @@ import com.PostInventory.Classes.LikesUnlikes;
 import com.PostInventory.Classes.Post;
 import com.PostInventory.Repositories.ImageUrlsRepository;
 import com.PostInventory.Repositories.PostRepository;
+import com.PostInventory.Wrappers.PostImagesWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,12 @@ public class PostService {
 
     public Post getPostByPostId(int postId){
         return postRepository.getByPostId(postId);
+    }
+
+    public PostImagesWrapper getPostByPostIdWithImageUrls(int postId){
+        Post post = postRepository.getByPostId(postId);
+        List<ImageUrls> imageUrls = imageUrlsRepository.getPostImagesUrlsList(postId);
+        return new PostImagesWrapper(post,imageUrls);
     }
 
     public List<Post> getUserPosts(int userId){

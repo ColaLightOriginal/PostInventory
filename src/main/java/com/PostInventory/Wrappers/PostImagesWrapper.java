@@ -7,6 +7,11 @@ import java.util.List;
 
 public class PostImagesWrapper {
 
+    public PostImagesWrapper(Post post, List<ImageUrls> imageUrls){
+        this.setPost(post);
+        this.setImageUrls(imageUrls);
+    }
+
     private Post post;
     private List<ImageUrls> imageUrls;
 

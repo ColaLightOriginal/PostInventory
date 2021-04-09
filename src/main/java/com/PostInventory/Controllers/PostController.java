@@ -36,8 +36,8 @@ public class PostController {
     }
 
     @GetMapping(value = "getPosts/{postId}")
-    public Post getPostById(@PathVariable Map<String, String> pathVariable){
-        return postService.getPostByPostId( Integer.parseInt(pathVariable.get("postId")));
+    public PostImagesWrapper getPostById(@PathVariable Map<String, String> pathVariable){
+        return postService.getPostByPostIdWithImageUrls( Integer.parseInt(pathVariable.get("postId")));
     }
 
     @ResponseBody
