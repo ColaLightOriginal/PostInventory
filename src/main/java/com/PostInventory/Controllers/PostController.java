@@ -93,13 +93,11 @@ public class PostController {
     public List<PostDTO> getPostsFromCoordWithinRadius(@PathVariable Map<String, String> pathVariable){
         Float latitude = Float.parseFloat(pathVariable.get("latitude"));
         Float longitude = Float.parseFloat(pathVariable.get("longitude"));
-        Float latitudeDelta = Float.parseFloat(pathVariable.get("latitudeDelta"));
-        Float longitudeDelta = Float.parseFloat(pathVariable.get("longitudeDelta"));
+        Float radiusInKm = Float.parseFloat(pathVariable.get("radiusInKm"));
 
-        latitudeDelta = latitudeDelta/100;
-        longitudeDelta = longitudeDelta/100;
+        radiusInKm = radiusInKm/100;
 
-        List<Post> postsList =  postService.getPostsFromCoord(latitude, longitude ,latitudeDelta, longitudeDelta);
+        List<Post> postsList =  postService.getPostsFromCoord(latitude, longitude, radiusInKm, radiusInKm);
         return modelMapper.map(postsList, new TypeToken<List<PostDTO>>() {}.getType());
     }
 
