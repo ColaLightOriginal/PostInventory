@@ -113,10 +113,10 @@ public class PostService {
 
             Session session = sessionFactory.unwrap(Session.class);
             session.beginTransaction();
-            LikesUnlikes tmp = session.get(LikesUnlikes.class, actualUserLikesUnlikes.getId());
-            session.saveOrUpdate(tmp);
             Post tmp2 = session.get(Post.class, post.getId());
             session.saveOrUpdate(tmp2);
+            LikesUnlikes tmp = session.get(LikesUnlikes.class, actualUserLikesUnlikes.getId());
+            session.saveOrUpdate(tmp);
             session.getTransaction().commit();
             session.close();
 //            postRepository.modifyLikesUnlikesOperation(actualUserLikesUnlikes);
