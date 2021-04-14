@@ -69,16 +69,41 @@ public class PostService {
         int operationUser = likesUnlikes.getUserId();
         int postId = likesUnlikes.getPostId();
         int userId = likesUnlikes.getUserId();
+        Post post = postRepository.getByPostId(likesUnlikes.getPostId());
+        Boolean operation = likesUnlikes.getOperation();
+
         Boolean isPostHasOperation = postRepository.checkIfPostHasUserOperation(operationUser, postId);
 
-        if(!isPostHasOperation) postRepository.addLikeOrUnlike(likesUnlikes);
-        else {
-            Boolean likeOrUnlike = postRepository.getLikesUnlikeUserPostOperation(operationUser, postId);
-            if(likeOrUnlike && likesUnlikes.getOperation() ||
-                (!likeOrUnlike && !likesUnlikes.getOperation())) return;
-
+        if(!isPostHasOperation) {
+            postRepository.addLikeOrUnlike(likesUnlikes);
+            if(operation) {
+                post.setLikesCount(post.getLikesCount()+1);
+            } else post.setLikesCount(post.getUnlikesCount()+1);
+            postRepository.modifyPost(post);
             postRepository.updateLikesUnlikesOperation(likesUnlikes,
                     postRepository.getLikesUpdatesIdByUserPostId(userId,postId));
+            return;
+        }
+
+        else {
+            LikesUnlikes actualUserLikesUnlikes =  postRepository.getLikesUnlikeUserPostOperation(operationUser, postId);
+            Boolean userActualPostOperation = actualUserLikesUnlikes.getOperation();
+            if(userActualPostOperation && operation ||
+                (!userActualPostOperation && !operation)) return;
+            else if(userActualPostOperation && !operation){
+                postRepository.deleteLikesUnlike(actualUserLikesUnlikes);
+                post.setLikesCount(post.getLikesCount()-1);
+                postRepository.addLikeOrUnlike(likesUnlikes);
+                post.setLikesCount(post.getUnlikesCount()+1);
+                postRepository.modifyPost(post);
+            }
+            else{
+                postRepository.deleteLikesUnlike(actualUserLikesUnlikes);
+                post.setLikesCount(post.getUnlikesCount()-1);
+                postRepository.addLikeOrUnlike(likesUnlikes);
+                post.setLikesCount(post.getLikesCount()+1);
+                postRepository.modifyPost(post);
+            }
         }
     }
 

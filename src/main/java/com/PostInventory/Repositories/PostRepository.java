@@ -142,7 +142,18 @@ public class PostRepository {
         return true;
     }
 
-    public boolean getLikesUnlikeUserPostOperation(int userId, int postId){
+    public boolean checkPostUserOperation(int userId, int postId){
+        LikesUnlikes result;
+        String query = "SELECT likes_unlikes from LikesUnlikes likes_unlikes where user_id=:userId and post_id=:postId";
+        TypedQuery<LikesUnlikes> typedQuery = sessionFactory.createQuery(query, LikesUnlikes.class);
+        typedQuery.setParameter("userId", userId);
+        typedQuery.setParameter("postId", postId);
+
+        return typedQuery.getSingleResult().getOperation();
+    }
+
+
+    public LikesUnlikes getLikesUnlikeUserPostOperation(int userId, int postId){
         LikesUnlikes result;
         String query = "SELECT likes_unlikes from LikesUnlikes likes_unlikes where user_id=:userId and post_id=:postId";
         TypedQuery<LikesUnlikes> typedQuery = sessionFactory.createQuery(query, LikesUnlikes.class);
@@ -150,7 +161,7 @@ public class PostRepository {
         typedQuery.setParameter("postId", postId);
 
         result = typedQuery.getSingleResult();
-        return result.getOperation();
+        return result;
     }
 
     public void updateLikesUnlikesOperation(LikesUnlikes likesUnlikes,int likesUnlikesId){
@@ -177,5 +188,18 @@ public class PostRepository {
 
         result = typedQuery.getSingleResult();
         return result.getId();
+    }
+
+    public void deleteLikesUnlike(LikesUnlikes likesUnlikes){
+        try{
+            Session session = sessionFactory.unwrap(Session.class);
+            session.beginTransaction();
+            LikesUnlikes result = session.get(LikesUnlikes.class, likesUnlikes.getId());
+            session.delete(result);
+            session.getTransaction().commit();
+            session.close();
+        }catch(Exception e){
+            System.out.println(e);
+        }
     }
 }
