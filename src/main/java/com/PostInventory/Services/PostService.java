@@ -96,13 +96,15 @@ public class PostService {
             actualUserLikesUnlikes.log();
 
             Boolean userActualPostOperation = actualUserLikesUnlikes.getOperation();
-            if(userActualPostOperation && operation ||
+            if((userActualPostOperation && operation) ||
                 (!userActualPostOperation && !operation)) return;
             else if(userActualPostOperation && !operation){
+                System.out.println("unlike");
                 post.setLikesCount(post.getUnlikesCount()+1);
                 post.setUnlikesCount(post.getLikesCount()-1);
             }
             else{
+                System.out.println("like");
                 post.setLikesCount(post.getUnlikesCount()-1);
                 post.setUnlikesCount(post.getLikesCount()+1);
             }
