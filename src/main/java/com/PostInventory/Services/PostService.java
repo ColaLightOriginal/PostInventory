@@ -80,8 +80,6 @@ public class PostService {
                 post.setLikesCount(post.getLikesCount()+1);
             } else post.setLikesCount(post.getUnlikesCount()+1);
             postRepository.modifyPost(post);
-            postRepository.updateLikesUnlikesOperation(likesUnlikes,
-                    postRepository.getLikesUpdatesIdByUserPostId(userId,postId));
             return;
         }
 
