@@ -89,17 +89,16 @@ public class PostService {
             if(userActualPostOperation && operation ||
                 (!userActualPostOperation && !operation)) return;
             else if(userActualPostOperation && !operation){
-                postRepository.deleteLikesUnlike(actualUserLikesUnlikes);
                 post.setLikesCount(post.getLikesCount()-1);
-                postRepository.addLikeOrUnlike(likesUnlikes);
-                post.setLikesCount(post.getUnlikesCount()+1);
+                post.setUnlikesCount(post.getUnlikesCount()+1);
+                postRepository.modifyLikesUnlikesOperation(likesUnlikes);
                 postRepository.modifyPost(post);
             }
             else{
                 postRepository.deleteLikesUnlike(actualUserLikesUnlikes);
                 post.setLikesCount(post.getUnlikesCount()-1);
-                postRepository.addLikeOrUnlike(likesUnlikes);
-                post.setLikesCount(post.getLikesCount()+1);
+                post.setUnlikesCount(post.getLikesCount()-1);
+                postRepository.modifyLikesUnlikesOperation(likesUnlikes);
                 postRepository.modifyPost(post);
             }
         }

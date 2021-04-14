@@ -164,12 +164,11 @@ public class PostRepository {
         return result;
     }
 
-    public void updateLikesUnlikesOperation(LikesUnlikes likesUnlikes,int likesUnlikesId){
+    public void modifyLikesUnlikesOperation(LikesUnlikes likesUnlikes){
         try{
             Session session = sessionFactory.unwrap(Session.class);
             session.beginTransaction();
-            LikesUnlikes tmp = session.get(LikesUnlikes.class, likesUnlikesId);
-            tmp.setOperation(likesUnlikes.getOperation());
+            LikesUnlikes tmp = session.get(LikesUnlikes.class, likesUnlikes.getId());
             session.saveOrUpdate(tmp);
             session.getTransaction().commit();
             session.close();
