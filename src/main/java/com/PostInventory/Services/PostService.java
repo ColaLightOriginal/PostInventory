@@ -102,11 +102,13 @@ public class PostService {
                 System.out.println("unlike");
                 post.setLikesCount(post.getUnlikesCount()+1);
                 post.setUnlikesCount(post.getLikesCount()-1);
+                actualUserLikesUnlikes.setOperation(false);
             }
             else{
                 System.out.println("like");
                 post.setLikesCount(post.getUnlikesCount()-1);
                 post.setUnlikesCount(post.getLikesCount()+1);
+                actualUserLikesUnlikes.setOperation(true);
             }
 
             Session session = sessionFactory.unwrap(Session.class);
