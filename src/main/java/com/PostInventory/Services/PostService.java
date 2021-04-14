@@ -6,9 +6,12 @@ import com.PostInventory.Classes.Post;
 import com.PostInventory.Repositories.ImageUrlsRepository;
 import com.PostInventory.Repositories.PostRepository;
 import com.PostInventory.Wrappers.PostImagesWrapper;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,6 +23,10 @@ public class PostService {
     private PostRepository postRepository;
     @Autowired
     private ImageUrlsRepository imageUrlsRepository;
+    @Autowired
+    @PersistenceContext
+    private EntityManager sessionFactory;
+
 
     public List<Post> getPosts(){
         return postRepository.getAll();
@@ -95,8 +102,17 @@ public class PostService {
                 post.setLikesCount(post.getUnlikesCount()-1);
                 post.setUnlikesCount(post.getLikesCount()+1);
             }
-            postRepository.modifyLikesUnlikesOperation(actualUserLikesUnlikes);
-            postRepository.modifyPost(post);
+
+            Session session = sessionFactory.unwrap(Session.class);
+            session.beginTransaction();
+            LikesUnlikes tmp = session.get(LikesUnlikes.class, actualUserLikesUnlikes.getId());
+            session.saveOrUpdate(tmp);
+            Post tmp2 = session.get(Post.class, post.getId());
+            session.saveOrUpdate(tmp2);
+            session.getTransaction().commit();
+            session.close();
+//            postRepository.modifyLikesUnlikesOperation(actualUserLikesUnlikes);
+//            postRepository.modifyPost(post);
         }
     }
 
