@@ -49,4 +49,9 @@ public class LikesUnlikes {
     public void setOperation(boolean operation) {
         this.operation = operation;
     }
+
+    public void log(){
+        System.out.println("id: " + this.id + " user_id: " + this.userId + " post_id: "
+                + this.postId + " operation: " + this.operation);
+    }
 }

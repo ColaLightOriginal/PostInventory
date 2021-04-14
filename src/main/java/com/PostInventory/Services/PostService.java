@@ -81,6 +81,7 @@ public class PostService {
 
         Boolean isPostHasOperation = postRepository.checkIfPostHasUserOperation(operationUser, postId);
 
+        likesUnlikes.log();
         if(!isPostHasOperation) {
             postRepository.addLikeOrUnlike(likesUnlikes);
             if(operation) {
@@ -91,6 +92,9 @@ public class PostService {
 
         else {
             LikesUnlikes actualUserLikesUnlikes =  postRepository.getLikesUnlikeUserPostOperation(operationUser, postId);
+            System.out.println("ActualUserLikesUnlikes ");
+            actualUserLikesUnlikes.log();
+
             Boolean userActualPostOperation = actualUserLikesUnlikes.getOperation();
             if(userActualPostOperation && operation ||
                 (!userActualPostOperation && !operation)) return;
