@@ -86,6 +86,7 @@ public class PostRepository {
         }
     }
 
+    @Transactional
     public void modifyPost(Post post){
         try{
             Session session = sessionFactory.unwrap(Session.class);
@@ -164,6 +165,7 @@ public class PostRepository {
         return result;
     }
 
+    @Transactional
     public void modifyLikesUnlikesOperation(LikesUnlikes likesUnlikes){
         try{
             Session session = sessionFactory.unwrap(Session.class);
