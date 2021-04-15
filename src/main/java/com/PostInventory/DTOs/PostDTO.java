@@ -10,7 +10,7 @@ public class PostDTO {
     private String title;
     private String description;
     private int createUser;
-
+    private String createDateTime;
 
     public int getId() {
         return id;
@@ -75,5 +75,14 @@ public class PostDTO {
     public void setCreateUser(int createUser) {
         this.createUser = createUser;
     }
+
+    public String getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(String createDateTime) {
+        this.createDateTime = createDateTime;
+    }
+
 
 }
