@@ -6,7 +6,9 @@ import com.PostInventory.Classes.ResponseTransfer;
 import com.PostInventory.Services.CommentService;
 import com.PostInventory.Services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,37 +22,64 @@ public class CommentControler {
     private CommentService commentService;
 
     @GetMapping(value = "getComments")
-    public List<Comment> getPosts() {
-        return commentService.getAllComments();
+    public ResponseEntity<List<Comment>> getPosts() {
+        try {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(commentService.getAllComments());
+        } catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping(value = "getCommentsByPostId/{postId}")
-    public List<Comment> getCommentsByPostId(@PathVariable Map<String, String> pathVariable){
-        return commentService.getCommentsByPostId(Integer.parseInt(pathVariable.get("postId")));
+    public ResponseEntity<List<Comment>> getCommentsByPostId(@PathVariable Map<String, String> pathVariable){
+        try {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(commentService.getCommentsByPostId(Integer.parseInt(pathVariable.get("postId"))));
+        } catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping(value = "getComments/{commentId}")
-    public Comment getCommentById(@PathVariable Map<String, String> pathVariable){
-        return commentService.getCommentById(Integer.parseInt(pathVariable.get("commentId")));
+    public ResponseEntity<Comment> getCommentById(@PathVariable Map<String, String> pathVariable){
+        try {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(commentService.getCommentById(Integer.parseInt(pathVariable.get("commentId"))));
+        } catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PostMapping(value = "createComment", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseTransfer createComment(@RequestBody Comment comment){
+    public ResponseEntity<Comment> createComment(@RequestBody Comment comment){
         try{
             commentService.createComment(comment);
-            return new ResponseTransfer("Ok", "200", "Comment added");
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(comment);
         } catch( Exception e){
-            return new ResponseTransfer("Error", "500", "Internal server error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @DeleteMapping(value = "removeComment/{commentId}")
-    public void deleteComment(@PathVariable Map<String, String> pathVariable){
-        commentService.deleteComment(Integer.parseInt(pathVariable.get("commentId")));
+    public ResponseEntity<String> deleteComment(@PathVariable Map<String, String> pathVariable){
+        try{
+            commentService.deleteComment(Integer.parseInt(pathVariable.get("commentId")));
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body("Comment Deleted");
+        } catch( Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping(value = "getCommentsCount/{postId}")
-    public long getCommentsCountByPostId(@PathVariable Map<String, String> pathVariable){
-        return commentService.getCommentsCountByPostId(Integer.parseInt(pathVariable.get("postId")));
+    public ResponseEntity<Long> getCommentsCountByPostId(@PathVariable Map<String, String> pathVariable){
+        try{
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(commentService.getCommentsCountByPostId(Integer.parseInt(pathVariable.get("postId"))));
+        } catch( Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

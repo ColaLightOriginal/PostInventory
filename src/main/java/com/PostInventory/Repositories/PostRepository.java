@@ -3,6 +3,9 @@ import com.PostInventory.Classes.LikesUnlikes;
 import com.PostInventory.Classes.Post;
 import com.PostInventory.Utlis.GeoLocationUtils.GeoLocation;
 import com.PostInventory.Utlis.PostUtils.PostValidator;
+import org.hibernate.ObjectDeletedException;
+import org.hibernate.ObjectNotFoundException;
+import org.hibernate.QueryException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -50,12 +53,10 @@ public class PostRepository {
 
     public List<Post> getUserPosts(int userId){
         try{
-            List<Post> resultList = new LinkedList<>();
             String query = "select post from Post post where createUser=:userId";
             TypedQuery<Post> typedQuery = sessionFactory.createQuery(query, Post.class);
             typedQuery.setParameter("userId", userId);
-            resultList = typedQuery.getResultList();
-            return resultList;
+            return typedQuery.getResultList();
         }catch(Exception e){
             System.out.println(e);
             return null;
@@ -73,17 +74,17 @@ public class PostRepository {
         }
     }
 
-    public void deletePost(int postId){
-        try{
+    public void deletePost(int postId) throws IllegalArgumentException{
             Session session = sessionFactory.unwrap(Session.class);
             session.beginTransaction();
             Post post = session.get(Post.class, postId);
+            if(post == null) {
+                session.close();
+                throw new IllegalArgumentException();
+            }
             session.delete(post);
             session.getTransaction().commit();
             session.close();
-        }catch(Exception e){
-            System.out.println(e);
-        }
     }
 
     @Transactional
