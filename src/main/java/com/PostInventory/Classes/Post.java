@@ -4,6 +4,7 @@ import com.PostInventory.Enums.PostStatus;
 import com.PostInventory.Enums.PostType;
 import com.PostInventory.Utlis.DateTimeFormat;
 import com.PostInventory.Utlis.GeoLocationUtils.GeoLocation;
+import lombok.ToString;
 import org.apache.commons.lang3.EnumUtils;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import static com.PostInventory.Utlis.DateTimeFormat.getCentralTime;
 
 @Entity
 @Table(name = "post")
+@ToString
 public class Post {
 
     @Id
